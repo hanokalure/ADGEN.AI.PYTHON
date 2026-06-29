@@ -18,10 +18,12 @@ HF_INFERENCE_BASE = os.getenv("HF_INFERENCE_BASE", "https://router.huggingface.c
 HF_IMAGE_MODEL = os.getenv("HF_IMAGE_MODEL", "black-forest-labs/FLUX.1-schnell")
 
 def get_hf_token() -> str:
-    return os.getenv("HF_API_KEY") or os.getenv("HUGGINGFACE_API_KEY") or ""
+    token = os.getenv("HF_API_KEY") or os.getenv("HUGGINGFACE_API_KEY") or ""
+    return token.strip().strip('"').strip("'")
 
 def get_gemini_token() -> str:
-    return os.getenv("GEMINI_API_KEY") or ""
+    token = os.getenv("GEMINI_API_KEY") or ""
+    return token.strip().strip('"').strip("'")
 
 def dimensions_for_aspect_ratio(aspect_ratio: Optional[str]):
     if aspect_ratio == "16:9":
