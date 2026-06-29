@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AdGen.AI - Next-Gen Creative Suite</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <h1 class="header-title">AdGen<span class="blue">.AI</span></h1>
+    <div class="header-badges">
+      <span class="badge-black">Engine: Vision-X4</span>
+      <span class="badge-outline">Status: Ready</span>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-container">
+    <div class="dashboard-grid">
+      
+      <!-- Settings Form Column -->
+      <section class="settings-card">
+        <div class="card-header">
+          <h2>Settings</h2>
+          <p>Configure parameters for generation</p>
+        </div>
+
+        <form id="adForm" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <!-- Product Name -->
+            <div class="form-group">
+              <label for="productName">Product or Service</label>
+              <input 
+                type="text" 
+                id="productName" 
+                class="input-underline" 
+                placeholder="VELOCITY PEAK" 
+                required
+              >
+            </div>
+
+            <!-- Target Audience -->
+            <div class="form-group">
+              <label for="targetAudience">Target Audience</label>
+              <input 
+                type="text" 
+                id="targetAudience" 
+                class="input-underline small" 
+                placeholder="URBAN ATHLETES"
+              >
+            </div>
+
+            <!-- Ad Concept -->
+            <div class="form-group">
+              <label for="adGoal">Ad Concept</label>
+              <textarea 
+                id="adGoal" 
+                class="textarea-box" 
+                rows="3" 
+                placeholder="FUTURISTIC HIGH-TOP SNEAKERS SUSPENDED IN A SWIRL OF DIGITAL ETHER..." 
+                required
+              ></textarea>
+            </div>
+
+            <!-- Options Grid -->
+            <div class="form-row">
+              <div class="form-group">
+                <label for="adStyle">Model Style</label>
+                <select id="adStyle" class="select-custom">
+                  <option value="Photorealistic">Photorealistic</option>
+                  <option value="Cinematic">Cinematic</option>
+                  <option value="Minimalist">Minimalist</option>
+                  <option value="Vivid & Playful">Vivid & Playful</option>
+                  <option value="3D Render">3D Render</option>
+                  <option value="Vector Art">Vector Art</option>
+                  <option value="Neon Cyberpunk">Neon Cyberpunk</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="aspectRatio">Aspect Ratio</label>
+                <select id="aspectRatio" class="select-custom dark">
+                  <option value="1:1">Square (1:1)</option>
+                  <option value="16:9" selected>Landscape (16:9)</option>
+                  <option value="9:16">Portrait (9:16)</option>
+                  <option value="4:3">Classic (4:3)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div style="padding-top: 1.5rem; border-top: 4px solid black;">
+            <button type="submit" id="btnSubmit" class="btn-submit">
+              <span id="btnText">Generate Assets</span>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Preview Column -->
+      <section class="preview-card" id="previewCard">
+        <div class="coord-tag">
+          COORD: 52.3676° N, 4.9041° E / SEED: 9918273645
+        </div>
+
+        <div class="preview-header">
+          <h2>Preview</h2>
+          <button id="btnDownload" class="btn-download">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download
+          </button>
+        </div>
+
+        <div class="preview-content">
+          <!-- Idle State -->
+          <div id="stateIdle" class="state-box">
+            <div class="icon-square">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" opacity="0.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            </div>
+            <p class="state-title">Awaiting Input</p>
+            <p class="state-desc">System ready. Configure parameters to initialize generation sequence.</p>
+          </div>
+
+          <!-- Loading State -->
+          <div id="stateLoading" class="state-box" style="display: none;">
+            <div class="icon-square black">
+              <svg class="spin" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/></svg>
+            </div>
+            <p class="state-title">Synthesizing</p>
+            <p class="state-desc">Please hold...</p>
+          </div>
+
+          <!-- Error State -->
+          <div id="stateError" class="error-card" style="display: none;">
+            <div class="icon-square red" style="margin: 0 auto 1.5rem auto;">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </div>
+            <p class="state-title">System Error</p>
+            <p id="errorMsg" class="state-desc" style="margin: 0.5rem auto 0 auto;">An error occurred.</p>
+          </div>
+
+          <!-- Success Output State -->
+          <div id="stateSuccess" style="display: none; width: 100%; display: flex; flex-direction: column; align-items: center;">
+            <div id="imageFrame" class="image-wrapper">
+              <img id="outputImage" src="" alt="Generated Ad Creative">
+              <div class="brand-overlay">
+                <div>
+                  <div style="font-size: 0.625rem; font-weight: 900; text-transform: uppercase; margin-bottom: 0.25rem;">Generated Output</div>
+                  <div id="brandProduct" class="brand-title">VELOCITY PEAK</div>
+                </div>
+                <span class="brand-badge">ASSET</span>
+              </div>
+            </div>
+
+            <div class="prompt-card">
+              <div class="prompt-badge">Generation Prompt</div>
+              <p id="promptText" class="prompt-text"></p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div>GEN_TIME: OPTIMAL / SAMPLER: DPM++ 2M KERRAS / CFG: 7.5</div>
+    <div class="footer-links">
+      <span>Terms</span>
+      <span>API Access</span>
+      <span class="badge-pro">Pro User</span>
+    </div>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
